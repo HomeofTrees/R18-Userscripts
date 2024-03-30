@@ -2,9 +2,9 @@
 // @name        SankakuDLNamer
 // @namespace   SankakuDLNamer
 // @description adds download btn with automatic file naming to sankaku
-// @match       http*://chan.sankakucomplex.com/*post/*
-// @match       http*://idol.sankakucomplex.com/*post/*
-// @match       http*://beta.sankakucomplex.com/*post/*
+// @match       http*://chan.sankakucomplex.com/*posts/*
+// @match       http*://idol.sankakucomplex.com/*posts/*
+// @match       http*://beta.sankakucomplex.com/*posts/*
 // @run-at      document-end
 // @version     1.1.2.2
 // @grant       GM_download
@@ -25,6 +25,7 @@
     } else {
         sankakuDLnamerInit();
     }
+    console.log("Userscript SankakuDLNamer: End");
 
 function sankakuDLnamerInit(){
 
@@ -53,14 +54,29 @@ function sankakuDLnamerInit(){
 		var dl_me = function() {
 			GM_download(details);
 		}
+        var name_to_clipboard = function(){
+            navigator.clipboard.writeText(fileName);
+        }
 
         let dl_button = document.createElement('button');
+        dl_button.id = "sankakudl_download";
         dl_button.style = "display: block; cursor:pointer;";
         dl_button.innerText = "download";
         dl_button.onclick = dl_me;
 
-        document.getElementById("post-content").prepend(dl_button);
-        console.log("Userscript SankakuDLNamer: End");
+        let dl_name_copy = document.createElement('button');
+        dl_name_copy.id = "sankakudl_name_copy";
+        dl_name_copy.style = "display: block; cursor:pointer;";
+        dl_name_copy.innerText = "✂";
+        dl_name_copy.onclick = name_to_clipboard;
+
+        let sankakudlnamer_wrapper = document.createElement('div');
+        sankakudlnamer_wrapper.id = "sankakdlnamer_wrapper";
+        sankakudlnamer_wrapper.style = "display:flex;"
+
+        document.getElementById("post-content").prepend(sankakudlnamer_wrapper);
+        document.getElementById("sankakdlnamer_wrapper").append(dl_button);
+        document.getElementById("sankakdlnamer_wrapper").append(dl_name_copy);
 	}
 
 	function GetSidebarTags(tagsidebar) {
