@@ -6,7 +6,7 @@
 // @match       http*://idol.sankakucomplex.com/*posts/*
 // @match       http*://beta.sankakucomplex.com/*posts/*
 // @run-at      document-end
-// @version     1.1.2.2
+// @version     1.1.3.0
 // @grant       GM_download
 // ==/UserScript==
 
